@@ -4,6 +4,7 @@
 .shadetabs {
 	border-bottom: 1px solid gray; 
 	width: 95%; 
+	margin-bottom: -16; 
 	background-image: url(../icons/shade.png);
 	background-repeat: repeat-x; 
 	/* width: 90%; width of menu. Uncomment to change to a specific width */
