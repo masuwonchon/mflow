@@ -168,7 +168,8 @@
     </div>
     
     <div class="panel">
-        <div class="panel_section_title">View</div>
+<!-- Zoom Level -->
+        <div class="panel_section_title">Zoom</div>
         <div class="panel_section_content">
 	    <table>
 		<tr>
@@ -183,17 +184,21 @@
 			</form>
 		    </td>
 		</tr>
+<!--
 		<tr>
 		    <td style="vertical-align:bottom">
 			<input type="checkbox" id="auto-refresh" /><label for="auto-refresh">Auto-refresh</label>
 		    </td>
 		</tr>
+-->
 	    </table>
 
 
         </div>
         <hr />
-        <div class="panel_section_title">Options</div>
+
+	<!-- Analysis Type -->
+        <div class="panel_section_title">Sources</div>
         <div class="panel_section_content" id="optionPanel">
             <form id="options">
                 <table>
@@ -204,40 +209,53 @@
                         </td>
                     </tr>
                 </table>
-                <input type="radio" id="nfsen_option_stattopN" name="nfsen_option" value="1" onclick="if (!$('#nfsen_stat_order').is(':visible')) $('#nfsen_stat_order').toggle();" />
-                <label for="nfsen_option_stattopN" class="clickable">Stat TopN</label><br />
-                <div id="nfsen_stat_order" style="margin-top:10px; margin-bottom:10px; text-align:right;">
-                    <input type="radio" name="nfsen_stat_order" value="0" id="nfsen_stat_order_flows" /><label for="nfsen_stat_order_flows">flows</label>
-                    <input type="radio" name="nfsen_stat_order" value="1" id="nfsen_stat_order_packets" /><label for="nfsen_stat_order_packets">packets</label>
-                    <input type="radio" name="nfsen_stat_order" value="2" id="nfsen_stat_order_bytes" /><label for="nfsen_stat_order_bytes">bytes</label>
-                </div>
-                <input type="radio" id="nfsen_option_listflows" name="nfsen_option" value="0" onclick="if ($('#nfsen_stat_order').is(':visible')) $('#nfsen_stat_order').toggle();" />
-                <label for="nfsen_option_listflows" class="clickable">List Flows</label><br />
-                <div style="margin-top:10px; width:195px;">
+                <input type="radio" id="nfsen_option_stattopN" name="nfsen_option" value="1" onclick="if ($('#StartDate').is(':visible')) $('#StartDate').toggle(); if ($('#EndDate').is(':visible')) $('#EndDate').toggle();" />
+                <label for="nfsen_option_stattopN" class="clickable">Live TopN</label><br />
+                <input type="radio" id="nfsen_option_listflows" name="nfsen_option" value="0" onclick="if (!$('#StartDate').is(':visible')) $('#StartDate').toggle(); if (!$('#EndDate').is(':visible')) $('#EndDate').toggle();" />
+                <label for="nfsen_option_listflows" class="clickable">Replay Flows</label><br />
+
+                <div id="StartDate" style="margin-top:10px; width:195px;">
                     <span style="float:left; margin-top:3px;">Start</span>
                     <input type="text" id="date_start" class="date_time_input" />
                     <div class="ui-state-default ui-corner-all no-icon-background" style="float:right; margin-top:2px;">
                         <span class="ui-icon ui-icon-arrowthick-1-e" title="Copy 'end' time to here" onclick="copy_date_time_selector('date_end', 'date_start');"></span>
                     </div>
-                </div><br />
-                <div style="margin-top:10px; width:195px;">
+		<br />
+                </div>
+
+                <div id="EndDate" style="margin-top:10px; width:195px;">
                     <span style="float:left; margin-top:3px;">End</span>
                     <input type="text" id="date_end" class="date_time_input" />
                     <div class="ui-state-default ui-corner-all no-icon-background" style="float:right; margin-top:2px;">
                         <span class="ui-icon ui-icon-arrowthick-1-e" title="Copy 'begin' time to here" onclick="copy_date_time_selector('date_start', 'date_end');"></span>
                     </div>
-                </div><br />
-                
-                <!-- Limit to -->
-                <div style="margin-top:10px; width:195px;">
-                    <span style="float:left; margin-top:3px;">Limit to</span>
-                    <span style="width:127px; float:right;">
-		    <input type="text" id="flow_record_count_input" style="width:35px; padding:2px 0px 2px 0px; text-align:center;" maxlength="5"><label for="flow_record_count_input"> flows</label><span>
-                </div><br />
-                
-                <!-- Aggregation fields -->
 		<br />
-	        <hr />
+                </div>
+                
+		<hr />
+
+	<!-- Units Setting -->
+        <div class="panel_section_title">Units</div>
+                <div id="nfsen_stat_order" style="margin-top:10px; margin-bottom:10px; text-align:left;">
+                    <input type="radio" name="nfsen_stat_order" value="0" id="nfsen_stat_order_flows" /><label for="nfsen_stat_order_flows">Flows</label>
+                    <input type="radio" name="nfsen_stat_order" value="1" id="nfsen_stat_order_packets" /><label for="nfsen_stat_order_packets">Packets</label>
+                    <input type="radio" name="nfsen_stat_order" value="2" id="nfsen_stat_order_bytes" /><label for="nfsen_stat_order_bytes">Bytes</label>
+                </div>
+
+                <div style="margin-top:10px;">
+                    <span style="float:left; margin-top:3px;">Limit to</span>
+                    <span style="width:80px; float:right;">
+		    <input type="text" id="flow_record_count_input" style="width:35px; padding:2px 0px 2px 0px; text-align:center;" maxlength="5"><label for="flow_record_count_input"> flows</label>
+                </div><br />
+                <div style="margin-top:10px;">
+		    <label for="auto-refresh">Auto-refresh</label>
+                    <span style="width:84px; float:right;">
+		    <input type="checkbox" id="auto-refresh" />
+		</div>
+		<hr />
+		<!-- Filter -->
+        <div class="panel_section_title">Filters</div>
+                <!-- Aggregation filter -->
                 <div style="margin-top:10px; width:195px;">
                     <div class="clickable unselectable" id="aggregation_label" title="Show aggregation options">
                         <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
@@ -281,7 +299,7 @@
                         <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
                             <span class="ui-icon filter_label_icon ui-icon-triangle-1-e"></span>
                         </div>
-                        <span class="filter_label_text disable-select" style="float:left;">Flow filter</span><br />
+                        <span class="filter_label_text disable-select" style="float:left;">Flow</span><br />
                     </div>
                     <textarea class="filter" id="filter_flow_text" rows="3" cols="26"></textarea>
                 </div><br />
@@ -292,12 +310,12 @@
                         <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
                             <span class="ui-icon filter_label_icon ui-icon-triangle-1-e"></span>
                         </div>
-                        <span class="filter_label_text disable-select" style="float:left;">Geo filter</span><br />
+                        <span class="filter_label_text disable-select" style="float:left;">Geo</span><br />
                     </div>
                     <textarea class="filter" id="filter_geo_text" rows="3" cols="26"></textarea>
                 </div><br />
                 <div style="text-align:center; width:195px;">
-                    <input type="submit" name="submit" value="Load data" />
+                    <input type="submit" name="submit" value="Apply" />
                 </div>
             </form>
         </div>

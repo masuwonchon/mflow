@@ -215,9 +215,10 @@
         // NfSen option
         if (session_data['nfsen_option'] == 1) { // Stat TopN
             $('#nfsen_option_stattopN').prop('checked', true);
+            $('#StartDate').hide();
+            $('#EndDate').hide();
         } else {
             $('#nfsen_option_listflows').prop('checked', true);
-            $('#nfsen_stat_order').hide();
         }
         $('input:radio[name=\'nfsen_option\']').change(function () {
             if ($('input:radio[name=\'nfsen_option\']:checked').val() != session_data['nfsen_option']) {
