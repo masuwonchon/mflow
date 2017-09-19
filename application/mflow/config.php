@@ -36,7 +36,7 @@
     $config['ignore_marker_internal_traffic_in_line_color_classification'] = 1; 
 
     /* [DEV] */
-    $config['demo'] = True;
-    $config['debug'] = True;
+    $config['demo'] = False;
+    $config['debug'] = False;
     $config['log_file'] = "/var/www/nfsen/plugins/mflow/log/mflow.log";
 ?>

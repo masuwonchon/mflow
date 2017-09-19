@@ -295,7 +295,7 @@ Main(){
     if [ $INSTALL_PLUGIN = 1 ]; then
 	Get_nfsen_config
 	Install_plugin
-        Restart_services
+        Reload_services
     fi
 
     if [ $INSTALL_APPLICATION = 1 ]; then
@@ -303,6 +303,8 @@ Main(){
 	Get_nfsen_config
 	Install_application
         Configure_mflow
+	Restart_services
+	
     fi
 
 }
