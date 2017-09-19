@@ -279,6 +279,13 @@ Restart_services(){
     /usr/share/nfsen/bin/nfsen start
 }
 
+Make_menu(){
+    RAW_FNAME='/var/www/nfsen/nfsen.php'
+    sed -e "s/, 'Plugins'/, 'MFLOW'/g" $RAW_FNAME > nfsen.php.tmp
+    sed -e 's/case "Plugins":/case "MFLOW":/g' nfsen.php.tmp > nfsen.php
+    cp nfsen.php $RAW_FNAME
+    rm nfsen.php nfsen.php.tmp
+}
 
 Main(){
 
@@ -304,7 +311,7 @@ Main(){
 	Install_application
         Configure_mflow
 	Restart_services
-	
+	Make_menu
     fi
 
 }
