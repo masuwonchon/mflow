@@ -11,7 +11,6 @@ NFSEN_CONF_OVERWRITE=""
 INSTALL_APPLICATION=0
 INSTALL_PLUGIN=0
 INSTALL_NFSEN=0
-INSTALL_NFDUMP=0
 ARGS=$@
 MY_LOC=""
 MFLOW_CONF=""
@@ -46,21 +45,10 @@ check_opts() {
 	    a)
 		OPTS=1
 		INSTALL_APPLICATION=1
-#		APPLICATION_ONLY=1
 		;;
 	    p)
 		OPTS=1
 		INSTALL_PLUGIN=1
-#		PLUGIN_ONLY=1
-		;;
-	    d)
-		OPTS=1
-		INSTALL_NFDUMP=1
-#		NFDUMP_ONLY=1
-		;;
-	    n)
-		OPTS=1
-		NFSEN_CONF_OVERWRITE=$OPTARG
 		;;
 	    s)
 		OPTS=1
@@ -290,17 +278,13 @@ Restart_services(){
 Main(){
 
     check_opts $ARGS
-    echo "[DEBUG] INSTALL_NFDUMP: $INSTALL_NFDUMP"
     echo "[DEBUG] INSTALL_NFSEN: $INSTALL_NFSEN"
     echo "[DEBUG] INSTALL_APPLICATION: $INSTALL_APPLICATION"
     echo "[DEBUG] INSTALL_PLUGIN: $INSTALL_PLUGIN"
 
     if [ $INSTALL_NFSEN = 1 ]; then
-	Install_nfsen
-    fi
-
-    if [ $INSTALL_NFDUMP = 1 ]; then
 	Install_nfdump
+	Install_nfsen
     fi
 
     if [ $INSTALL_PLUGIN = 1 ]; then
