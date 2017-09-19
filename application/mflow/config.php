@@ -25,6 +25,7 @@
    
     /* [NfSen] */
     $config['nfsen_default_sources'] = ""; 
+    $config['nfsen_dir'] = "/var/cache/nfdump/flows//live/upstream1";
     
     /* [GeoLocation] */
     $config['geolocation_db'] = "MaxMind"; 

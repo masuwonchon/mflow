@@ -59,7 +59,7 @@
     }
 
     if ($nfsen_option == 1) {
-        $DIR = "/var/cache/nfdump/flows//live/upstream1";
+        $DIR = $config['nfsen_dir'];
         $DIR_DATE = date("Y-m-d");
         $files = scandir("$DIR/$DIR_DATE", SCANDIR_SORT_DESCENDING);
         $newest_file = $files[0];
