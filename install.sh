@@ -270,8 +270,13 @@ Configure_mflow(){
     fi
 }
 
-Restart_services(){
+Reload_services(){
     /usr/share/nfsen/bin/nfsen reload
+}
+
+Restart_services(){
+    /usr/share/nfsen/bin/nfsen stop
+    /usr/share/nfsen/bin/nfsen start
 }
 
 
