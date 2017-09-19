@@ -29,10 +29,9 @@ err_line () {
 help () {
     echo "[Options]"
     echo "-h : help"
-    echo "-a : Install application only"
-    echo "-p : Install plugin only"
     echo "-n : Install nfsen"
-    echo "-f : Install nfdump"
+    echo "-p : Install plugin only"
+    echo "-a : Install application only"
 }
 
 check_opts() {
@@ -40,7 +39,7 @@ check_opts() {
     PLUGIN_ONLY=0
     OPTS=0
 
-    while getopts ":apdnsh:" opt; do
+    while getopts ":apnh" opt; do
 	case $opt in
 	    a)
 		OPTS=1
@@ -50,7 +49,7 @@ check_opts() {
 		OPTS=1
 		INSTALL_PLUGIN=1
 		;;
-	    s)
+	    n)
 		OPTS=1
 		INSTALL_NFSEN=1
 		;;
@@ -73,6 +72,7 @@ check_opts() {
 }
 
 Install_nfdump(){
+    apt-get update
     apt-get -yq install nfdump
     apt-get -yq install apache2 
     apt-get -yq install libapache2-mod-php
