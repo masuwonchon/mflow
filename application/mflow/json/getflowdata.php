@@ -58,6 +58,19 @@
 	$flow_record_count=$default['flow_count'];
     }
 
+    if ($nfsen_option == 1) {
+        $DIR = "/var/cache/nfdump/flows//live/upstream1";
+        $DIR_DATE = date("Y-m-d");
+        $files = scandir("$DIR/$DIR_DATE", SCANDIR_SORT_DESCENDING);
+        $newest_file = $files[0];
+        $minutes1 = substr($newest_file,-2);
+        $minutes2 = $minutes1;
+        $date1 = substr($newest_file, 7, -4);
+        $date2 = $date1;
+        $hours1 = substr($newest_file, 15, -2);
+        $hours2 = $hours1;
+    }   
+
     error_log ("[DEBUG]::".__FILE__."::".__LINE__.":: From: $date1-$hours1:$minutes1, To: $date2-$hours2:$minutes2 (flow count: $flow_record_count)\n", 3, $config['log_file']);
 
     // Queries
