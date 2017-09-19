@@ -15,7 +15,7 @@
     <title>MFLOW</title>
     <link type="text/css" rel="stylesheet" href="lib/jquery/css/start/jquery-ui-1.10.4.custom.min.css" />
     <link type="text/css" rel="stylesheet" href="css/mflow.css" />
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDHX19N8Mmyau9oiTFQnmJLXYuUWMliP-4&v=3"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAX5-RzfBfreiLLyvxEtbZpsBtpT_3aQa4"></script>
     <script type="text/javascript" src="lib/jquery/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="lib/jquery/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script type="text/javascript" src="lib/jquery_browser/jquery.browser.js"></script> 
