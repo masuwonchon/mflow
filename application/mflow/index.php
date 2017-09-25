@@ -162,7 +162,6 @@
         </div>
         <div class="footer" id="footerfunctions" style='float:right;'>
             <a href="Javascript:show_flow_details();" title="Show flow details">Flow Lists</a> | 
-            <a href="Javascript:show_info('help');" title="Show help information">Help</a> | 
             <a href="Javascript:show_info('about');" title="Show about information">About</a>
         </div>
     </div>

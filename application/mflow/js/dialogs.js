@@ -226,39 +226,6 @@ function show_info (type) {
 	// Give the error dialog the highest priority
 	$('#error_dialog').dialog('moveToTop');
 
-    } else if (type == 'help') {
-	$('#info_dialog').html('Welcome to the Mflow help. Some main principles of Mflow are explained here.<br /><br /> \
-		<table id=\"help\"> \
-		    <tr> \
-			<td class=\"help_item\">Marker</td> \
-			<td>Markers represent hosts and show information about them, such as IPv4 addresses and the country, region and city they\'re located in. A green marker indicates the presence of a flow of which the source and destination are located \'inside\' the same marker.<hr /></td> \
-		    </tr> \
-		    <tr> \
-			<td class=\"help_item\">Line</td> \
-			<td>Lines represent a flow between two hosts (so between markers) and show information about that flow, like the geographical information of the two end points, the exchanged amount of packets, octets and throughput per flow.<hr /></td> \
-		    </tr> \
-		    <tr> \
-			<td class=\"help_item\">Zoom levels table</td> \
-			<td>This tables shows the current zoom level. The four zoom levels are also clickable, so that you can zoom in or out to a particular zoom level directly.<hr /></td> \
-		    </tr> \
-		    <tr> \
-			<td class=\"help_item\">NfSen options</td> \
-			<td>The main NfSen options - <i>List Flows</i> or <i>Stat TopN</i> - can be set here. The first option lists the first N flows of the selected time slot (N and the selected time slot will be discussed later). <i>Stat TopN</i> shows top N statistics about the network data in the selected time slot. The value of N can be set in the <i>Limit to</i> field, while the time slot can be set in the <i>Begin</i> and <i>End</i> fields.</td> \
-		    </tr> \
-		</table>');
-	$('#info_dialog').dialog({
-	    closeOnEscape: true,
-	    height: 'auto',
-	    modal: true,
-	    position: 'center',
-	    resizable: false,
-	    title: 'Help',
-	    width: '500px'
-	}).dialog('open');
-	
-	// Give the error dialog the highest priority
-	$('#error_dialog').dialog('moveToTop');
-
     }
 }
 
