@@ -10,7 +10,6 @@
     }   
 
     require_once("../config.php");
-    require_once("../extensions.php");
     require_once("../../../conf.php");
     require_once("../../../nfsenutil.php");
 
@@ -34,12 +33,6 @@
         $nfsen_selected_sources = $_POST['params']['nfsen_selected_sources'];
         $aggregation_fields = $_POST['params']['aggregation_fields'];
         
-        // The 'extensions' parameter is ignored by jQuery (client-side) when it's an empty array
-        if (isset($_POST['params']['extensions'])) {
-            $extensions = $_POST['params']['extensions'];
-        } else {
-            $extensions = array();
-        }
     } else {
         $result['status'] = 1;
         $result['status_message'] = "No parameters provided";
@@ -71,18 +64,9 @@
         $hours2 = $hours1;
     }   
 
-    error_log ("[DEBUG]::".__FILE__."::".__LINE__.":: From: $date1-$hours1:$minutes1, To: $date2-$hours2:$minutes2 (flow count: $flow_record_count)\n", 3, $config['log_file']);
-
     // Queries
     $field_list = "%ts;%td;%sa;%da;%sp;%dp;%pr;%pkt;%byt;%fl";
-    foreach ($extensions as $extension) {
-        foreach ($extension->fields as $field) {
-            $field_list .= ";".$field->nfdump_short;
-        }
-        unset($field);
-    }
-    unset($extension);
-    
+
     if (mktime($hours1, $minutes1, 0, substr($date1, 4, 2), substr($date1, 6, 2), substr($date1, 0, 4))
             > mktime($hours2, $minutes2, 0, substr($date2, 4, 2), substr($date2, 6, 2), substr($date2, 0, 4))) {
         $result['status'] = 1;
@@ -171,11 +155,7 @@
 
     if ($config['debug'] == True) {
 	error_log ("[DEBUG]::".__FILE__."::".__LINE__.":: cmd_opts\n", 3, $config['log_file']);
-//	error_log (print_r($cmd_opts, TRUE)."\n", 3, $config['log_file']);
-
 	error_log ("[DEBUG]::".__FILE__."::".__LINE__.":: cmd_out\n", 3, $config['log_file']);
-//	error_log (print_r($cmd_out, TRUE)."\n", 3, $config['log_file']); //nfdump result array
-
 	error_log ("[DEBUG]::".__FILE__."::".__LINE__.":: result\n", 3, $config['log_file']);
 	error_log (print_r($result['query'], TRUE)."\n", 3, $config['log_file']);
     }
@@ -258,19 +238,7 @@
         
         // Index of the field in each nfdump line
         $field_index = 10;
-        foreach ($extensions as $extension) {
-            foreach ($extension->fields as $field) {
-                // Remove dollar-sign (nfdump output format notation)
-                $key = substr($field->nfdump_short, 1);
-                
-                // $record->$key = intval(trim($line_array[$field_index]));
-                $record->$key = trim($line_array[$field_index]);
-                $field_index++;
-            }
-            unset($field);
-        }
-        unset($extension);
-    
+
         array_push($result['flow_data'], $record);
     }
     unset($line);

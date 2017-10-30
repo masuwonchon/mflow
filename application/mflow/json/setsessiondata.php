@@ -148,11 +148,8 @@
     if (isset($_POST['params']['nfsen_selected_sources'])) {
         // If no source has been selected, do nothing
         if (count($_POST['params']['nfsen_selected_sources']) == 0) {
-//suwonchon
-//	    break;
             $result['status'] = 1;
             $result['status_message'] = "No seletec sources";
-//suwonchon eol
         }
         
         $_SESSION['MFLOW']['nfsen_selected_sources'] = array(); // Clear current list
@@ -174,8 +171,6 @@
         $result['session_data']['refresh'] = $_SESSION['MFLOW']['refresh'];
     }
 
-    // suwonchon    
-#    $out_list = nfsend_query("MFLOW::get_nfsen_profiledatadir", array());
     $out_list = nfsend_query("mflow::get_nfsen_profiledatadir", array());
     $nfsen_profile_data_dir = $out_list['nfsen_profiledatadir'];
     unset($out_list);

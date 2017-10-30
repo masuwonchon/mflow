@@ -121,7 +121,7 @@ function show_error (code, optional_message) {
 		    
 	    case 810:   message = "Could not retrieve backend status.";
 			break;
-		    
+
 	    case 811:   message = "Could not retrieve extensions.";
 			break;
 		    
@@ -334,16 +334,7 @@ function show_flow_details (flow_indices) {
 	static_field_count = 9;
     }
     
-    var field_count = static_field_count + extensions.length;
-    
-    // Add extension field names to list of fields
-    $.each(extensions, function (extension_ID, extension) {
-	$.each(this.fields, function (field_ID, field) {
-	    // Dollar-sign should be removed from 'nfdump_short' name
-	    field_names[field.nfdump_short.substr(1)] = field.short_name;
-	});
-    });
-    
+    var field_count = static_field_count;    
     protocols = [];
     protocols[1] = 'ICMP';
     protocols[2] = 'IGMP';

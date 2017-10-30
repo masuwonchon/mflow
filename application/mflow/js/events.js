@@ -41,23 +41,12 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $(document).bind('config_loaded', function () {
         init_panel();
-        
-        $.ajax({
-            url: 'json/getextensions.php',
-            success: function(data) {
-                if (data.status == 0) { // Success
-                    $(document).trigger('active_extensions_list_loaded', data);
-                } else {
-                    show_error(811, data.status_message);
-                }
-            }
-        });
-        
+        $(document).trigger('phase_1_loaded');
     });
-    
+
     // Retrieve config
     $.ajax({
         url: 'json/getconfig.php',
@@ -70,20 +59,14 @@ $(document).ready(function() {
             }
         }
     });
-    
+
+ 
     $(document).bind('constants_loaded', function () {
         if (config != undefined && constants != undefined && extensions != undefined) {
             $(document).trigger('phase_1_loaded');
         }
     });
-    
-    $(document).bind('active_extensions_list_loaded', function (event, data) {
-        extensions = data.extensions;
-        if (config != undefined && constants != undefined && extensions != undefined) {
-            $(document).trigger('phase_1_loaded');
-        }
-    });
-    
+
     // Fired when all configurations have been loaded (config, constants and active_extensions)
     $(document).bind('phase_1_loaded', function () {
         $(document).trigger('load_session_data');
@@ -177,7 +160,6 @@ $(document).ready(function() {
                     'nfsen_selected_sources': session_data['nfsen_selected_sources'],
                     'nfsen_stat_order': session_data['nfsen_stat_order'],
                     'aggregation_fields': session_data['aggregation_fields'],
-                    'extensions': extensions
                 }
             },
             success: function(data) {
@@ -233,7 +215,6 @@ $(document).ready(function() {
     });
     
     $(document).bind('geolocation_data_loaded', function (event, data) {
-	console.log("[DEBUG--] geolocation_data_loaded");
         geolocation_data = data.geolocation_data;
         $.each(flow_data, function(flow_index, flow_item) {
             // Source address
@@ -338,6 +319,7 @@ $(document).ready(function() {
         reverse_geocoder_request = [];
         
         $.each(flow_data, function () {
+/*
             if (is_extension_active('OTX')) {
                 var lat = parseFloat(this.loc_lat_int + "." + this.loc_lat_dec);
                 var lng = parseFloat(this.loc_lng_int + "." + this.loc_lng_dec);
@@ -356,6 +338,7 @@ $(document).ready(function() {
                     reverse_geocoder_request.push(latlng);
                 }
             }
+*/
         });
         
         if (reverse_geocoder_request.length > 0) {
@@ -429,6 +412,7 @@ $(document).ready(function() {
                         $.each(flow_data, function(flow_index, flow_item) {
                             // Reverse geocoded locations
                             $.each(reverse_geocoder_data, function(geocoder_index, geocoder_item) {
+/*
                                 if (is_extension_active('OTX')) {
                                     var lat = parseFloat(flow_item.loc_lat_int + "." + flow_item.loc_lat_dec);
                                     var lng = parseFloat(flow_item.loc_lng_int + "." + flow_item.loc_lng_dec);
@@ -451,6 +435,7 @@ $(document).ready(function() {
                                         }
                                     }
                                 }
+*/
                             });
                         });
                 
@@ -919,27 +904,35 @@ $(document).ready(function() {
                 });
             }
         }
-        $(document).trigger('process_map_elements');
+	$(document).trigger('otx_loaded');
     });
-    
-    $(document).bind('process_map_elements', function () {
 
-	console.log("[DEBUG] complement_location_information");
+    $(document).bind('otx_loaded', function () {
+        $.ajax({
+            url: 'json/getotxdata.php',
+            success: function(data) {
+                if (data.status == 0) { // Success
+                    $(document).trigger('process_map_elements', data);
+                } else {
+                    show_error(811, data.status_message);
+                }
+            }
+        });
+    });
+ 
+    $(document).bind('process_map_elements', function (event, data) {
+	cnc_lists = data.cnc_lists;
+
         complement_location_information();
 
-	console.log("[DEBUG] remove_map_overlays");
         remove_map_overlays();
 
-	console.log("[DEBUG] init_lines");
         init_lines();
 
-	console.log("[DEBUG] init_markers");
         init_markers();
 
-	console.log("[DEBUG] add_map_overlays");
         add_map_overlays(get_SM_zoom_level(map.getZoom()));
 
-	console.log("[DEBUG] init_legend");
         init_legend();
 
         $(document).trigger('loaded');

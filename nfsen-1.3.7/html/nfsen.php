@@ -84,6 +84,7 @@ function SendHeader ($established) {
 	<meta HTTP-EQUIV="Cache-Control" content="no-cache">
 	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
 	<link rel="stylesheet" type="text/css" href="css/nfsen.css">
+	<link rel="stylesheet" type="text/css" href="css/default.css">
 
 <?php
 	if ( !$established ) 

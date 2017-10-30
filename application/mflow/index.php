@@ -4,7 +4,6 @@
  # Author: masuwonchon@gmail.com
  #
  *******************************/
-     
      header("Content-type: text/html; charset=utf-8");
 ?>
 
@@ -88,7 +87,6 @@
         $(document).ajaxError(function(event, jqXHR, ajaxSettings, exception) {
             ajax_error = 1;
             $(document).trigger('loading_cancelled');
-	    console.log("[DEBUG] ajaxSettings: ", ajaxSettings);
             
             if (jqXHR.status == 0) {
                 show_error(800, "[ERROR] Could not connect to the server. Please check your network connectivity.");
@@ -183,13 +181,6 @@
 			</form>
 		    </td>
 		</tr>
-<!--
-		<tr>
-		    <td style="vertical-align:bottom">
-			<input type="checkbox" id="auto-refresh" /><label for="auto-refresh">Auto-refresh</label>
-		    </td>
-		</tr>
--->
 	    </table>
 
 
@@ -251,72 +242,13 @@
                     <span style="width:84px; float:right;">
 		    <input type="checkbox" id="auto-refresh" />
 		</div>
-		<hr />
 		<!-- Filter -->
-        <div class="panel_section_title">Filters</div>
-                <!-- Aggregation filter -->
-                <div style="margin-top:10px; width:195px;">
-                    <div class="clickable unselectable" id="aggregation_label" title="Show aggregation options">
-                        <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
-                            <span class="ui-icon filter_label_icon ui-icon-triangle-1-e"></span>
-                        </div>
-                        <span class="disable-select" id="aggregation_label_text" style="float:left;">Aggregation</span><br />
-                    </div>
-                    <table id="aggregation_fields">
-                        <tr>
-			    <td>
-                                <input type="checkbox" name="aggr_src_ip" id="aggr_src_ip" />
-                                <label for="aggr_src_ip">srcIP</label>
-                            </td>
-                            <td style="width:68px">
-                                <input type="checkbox" name="aggr_src_port" id="aggr_src_port" />
-                                <label for="aggr_src_port">srcPort</label>
-                            </td>
-                        </tr>
-			<tr>
-                            <td>
-                                <input type="checkbox" name="aggr_dst_ip" id="aggr_dst_ip" />
-                                <label for="aggr_dst_ip">dstIP</label>
-                            </td>
-                            <td style="width:68px">
-                                <input type="checkbox" name="aggr_dst_port" id="aggr_dst_port" />
-                                <label for="aggr_dst_port">dstPort</label>
-                            </td>
-                        </tr>
-			<tr>
-			    <td>
-                                <input type="checkbox" name="aggr_proto" id="aggr_proto" />
-                                <label for="aggr_proto">proto</label>
-                            </td>
-			</tr>
-                    </table>
-                </div><br />
-                
-                <!-- Flow filter -->
-                <div style="width:195px;">
-                    <div class="filter_label clickable unselectable" id="filter_flow" title="Show flow filter">
-                        <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
-                            <span class="ui-icon filter_label_icon ui-icon-triangle-1-e"></span>
-                        </div>
-                        <span class="filter_label_text disable-select" style="float:left;">Flow</span><br />
-                    </div>
-                    <textarea class="filter" id="filter_flow_text" rows="3" cols="26"></textarea>
-                </div><br />
-                
-                <!-- Geo filter -->
-                <div style="width:195px;">
-                    <div class="filter_label clickable unselectable" id="filter_geo" title="Show geo filter">
-                        <div class="ui-state-default ui-corner-all no-icon-background" style="float:left;">
-                            <span class="ui-icon filter_label_icon ui-icon-triangle-1-e"></span>
-                        </div>
-                        <span class="filter_label_text disable-select" style="float:left;">Geo</span><br />
-                    </div>
-                    <textarea class="filter" id="filter_geo_text" rows="3" cols="26"></textarea>
-                </div><br />
+		<br />
                 <div style="text-align:center; width:195px;">
                     <input type="submit" name="submit" value="Apply" />
                 </div>
             </form>
+
         </div>
     </div>
 
@@ -336,7 +268,6 @@
         
 	/* Adds missing location information to flow data based on upper layers. */
         function complement_location_information () {
-	    console.log("[DEBUG] complement_location_information");
             $.each(flow_data, function (flow_index, flow_item) {
                 $.each(zoom_levels, function (zoom_level_index, zoom_level) {                    
                     if (zoom_level_index == 1) { // Region
@@ -385,7 +316,6 @@
         }
         
         function init_lines () {
-	    console.log("[DEBUG] init_lines");
             lines = [];
 
             $.each(flow_data, function (flow_index, flow_item) {
@@ -409,23 +339,8 @@
                         point1 = new google.maps.LatLng(flow_item.src_region_lat, flow_item.src_region_lng);
                         point2 = new google.maps.LatLng(flow_item.dst_region_lat, flow_item.dst_region_lng);
                     } else { // City & Host
-                        if (is_extension_active('OTX')) {
-                            if (zoom_level_index == 2) { // City
-                                point1 = new google.maps.LatLng(flow_item.src_city_lat, flow_item.src_city_lng);
-                                point2 = new google.maps.LatLng(flow_item.dst_city_lat, flow_item.dst_city_lng);
-                            } else { // Host
-                                if (flow_item.src_host_lat == undefined || flow_item.src_host_lng == undefined) {
-                                    point1 = new google.maps.LatLng(flow_item.src_city_lat, flow_item.src_city_lng);
-                                    point2 = new google.maps.LatLng(flow_item.dst_host_lat, flow_item.dst_host_lng);
-                                } else { 
-                                    point1 = new google.maps.LatLng(flow_item.src_host_lat, flow_item.src_host_lng);
-                                    point2 = new google.maps.LatLng(flow_item.dst_city_lat, flow_item.dst_city_lng);
-                                }
-                            }
-                        } else {
                             point1 = new google.maps.LatLng(flow_item.src_city_lat, flow_item.src_city_lng);
                             point2 = new google.maps.LatLng(flow_item.dst_city_lat, flow_item.dst_city_lng);
-                        }
                     }
                     
                     var lines_index = -1; // -1: line does not exist, >= 0: line index in 'lines' array
@@ -641,13 +556,9 @@
         }
 
 	function init_markers() {
-	    var cnc_lists = {
-		0:	'61.161.203.170'
-	    };
 
 	    markers = [];
 
-            console.log("[DEBUG] init_markers: make marker from flow_data");
             $.each(flow_data, function (flow_index, flow_item) {
                 $.each(zoom_levels, function (zoom_level_index, zoom_level) {
                     $.each(['src', 'dst'], function () {
@@ -752,7 +663,6 @@
                 }); 
             }); 
             
-            console.log("[DEBUG] init_markers: zoom_levels");
             $.each(zoom_levels, function (zoom_level_index, zoom_level) {
                 $.each(markers, function (marker_index, marker) {
                     if (marker.level != zoom_level_index) {
@@ -789,10 +699,12 @@
                         if (marker.level != zoom_level_index) {
                             return true;
                         }
+
                         if (line.point1.equals(line.point2)
                                 && line.point1.equals(marker.point)) {
                             internal_traffic = true;
                         }
+
                         if (marker.extension != undefined && marker.extension == 'OTX') {
                             cnc_exporter = true;
 			    return true;

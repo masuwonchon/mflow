@@ -210,8 +210,6 @@
     
     $nfsen_profile_data_dir = $out_list['nfsen_profiledatadir'];
     
-    error_log ("[DEBUG--]::".__FILE__."::".__LINE__."::out_list: $nfsen_profile_data_dir\n", 3, $config['log_file']);
-
     unset($out_list);
     
     // In case the source files do not exist (yet) for a 5 min. buffer time, create timestamps based on 10 min. buffer time
