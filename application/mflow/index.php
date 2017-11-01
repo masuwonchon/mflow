@@ -562,15 +562,43 @@
             $.each(flow_data, function (flow_index, flow_item) {
                 $.each(zoom_levels, function (zoom_level_index, zoom_level) {
                     $.each(['src', 'dst'], function () {
-			var check_cnc = false;
+// suwoncho_remove
+//			var check_cnc = false;
+			var OTX_NAME = 'NONE';
+
 
 			ip_any = flow_item['ip_' + this];
+/*
 			$.each(cnc_lists, function (cnc_list_index, cnc_ip) {
 			    if (cnc_ip == ip_any){
 				check_cnc = true;
 				return true
 			    };
 			});
+
+*/
+
+                        // Matching cnc_lists
+                        $.each(cnc_lists, function (index, ip) {
+                            if (ip == ip_any){
+                                OTX_NAME = 'CNC';
+                                return true
+                            };
+                        });
+
+                        $.each(malware_lists, function (index, ip) {
+                            if (ip == ip_any){
+                                OTX_NAME = 'MALWARE';
+                                return true
+                            };
+                        });
+
+                        $.each(ddos_lists, function (index, ip) {
+                            if (ip == ip_any){
+                                OTX_NAME = 'DDOS';
+                                return true
+                            };
+                        });
 
                         var marker_text, entry_text, lat, lng;
                         if (zoom_level_index == 0) { // Country
@@ -617,7 +645,8 @@
                             marker.text = marker_text;
                             markers.push(marker);
                             markers_index = markers.length - 1;
-			    marker.extension = (check_cnc) ? 'OTX' : undefined;
+//			    marker.extension = (check_cnc) ? 'OTX' : undefined;
+			    marker.extension = OTX_NAME;
                         }
 
                         markers[markers_index].associated_flow_indices.push(flow_index);
@@ -705,7 +734,8 @@
                             internal_traffic = true;
                         }
 
-                        if (marker.extension != undefined && marker.extension == 'OTX') {
+//                        if (marker.extension != undefined && marker.extension == 'OTX') {
+                        if (marker.extension != undefined && marker.extension != 'NONE') {
                             cnc_exporter = true;
 			    return true;
                         }
@@ -714,7 +744,8 @@
                     if (internal_traffic) {
                         marker.obj = create_marker (marker.point, format_location_name(marker.text), info_window_contents, 'darkgreen');
                     } else if (cnc_exporter) {
-                        marker.obj = create_marker (marker.point, format_location_name(marker.text), info_window_contents, 'cncserver');
+//                        marker.obj = create_marker (marker.point, format_location_name(marker.text), info_window_contents, 'cncserver');
+                        marker.obj = create_marker (marker.point, format_location_name(marker.text), info_window_contents, marker.extension);
                     } else {
                         marker.obj = create_marker (marker.point, format_location_name(marker.text), info_window_contents, 'darkred');
                     }

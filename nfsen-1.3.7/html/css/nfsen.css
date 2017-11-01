@@ -3,7 +3,7 @@
 
 .shadetabs {
 	border-bottom: 1px solid gray; 
-	width: 95%; 
+	width: 100%; 
 	margin-bottom: -16; 
 	background-image: url(../icons/shade.png);
 	background-repeat: repeat-x; 

@@ -151,6 +151,15 @@
 	} else if (color == 'lightyello') {
 	    var lightyellow_marker = new google.maps.MarkerImage("img/small_lightyellow.png", new google.maps.Size(22, 35));
 	    marker_options['icon'] = lightyellow_marker;
+        } else if (color == 'CNC') {
+            var CNC_marker = new google.maps.MarkerImage("img/marker_hacker.png", new google.maps.Size(35, 35));
+            marker_options['icon'] = CNC_marker;
+        } else if (color == 'MALWARE') {
+            var MALWARE_marker = new google.maps.MarkerImage("img/marker_malware.png", new google.maps.Size(35, 35));
+            marker_options['icon'] = MALWARE_marker;
+        } else if (color == 'DDOS') {
+            var DDOS_marker = new google.maps.MarkerImage("img/marker_ddos.png", new google.maps.Size(38, 38));
+            marker_options['icon'] = DDOS_marker;
 	} else if (color == 'cncserver') {
 	    var cnc_marker = new google.maps.MarkerImage("img/small_cnc.png", new google.maps.Size(35, 35));
 	    marker_options['icon'] = cnc_marker;
@@ -670,15 +679,17 @@
     function quick_zoom (direction) {
         var current_level = get_SM_zoom_level(map.getZoom());
         if (direction == 0 && current_level < 3) {
-	    value = 5 + (current_level * 3);
+//	    value = 10;
+	    value = 5 + (current_level * 5);
 	    if (value >= config['default_max_zoom_level']){
 		value = config['default_max_zoom_level'];
 	    }
             map.setZoom(value);
         } else if (direction == 1 && current_level > 0) {
-	    value =2 + ((current_level - 1) * 3);
-	    if (value >= onfig['default_max_zoom_level']){
-		value = onfig['default_max_zoom_level'];
+	    value = 2;
+//	    value = 2 + ((current_level - 1) * 3);
+	    if (value >= config['default_max_zoom_level']){
+		value = config['default_max_zoom_level'];
 	    }
             map.setZoom(value);
         }

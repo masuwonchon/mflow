@@ -921,7 +921,9 @@ $(document).ready(function() {
     });
  
     $(document).bind('process_map_elements', function (event, data) {
-	cnc_lists = data.cnc_lists;
+	cnc_lists = data.cnc;
+	malware_lists = data.malware;
+	ddos_lists = data.ddos;
 
         complement_location_information();
 
