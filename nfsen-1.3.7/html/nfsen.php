@@ -53,7 +53,7 @@ include ("conf.php");
 include ("nfsenutil.php");
 include ("navigator.php");
 
-$TabList	= array ( 'Home', 'Graphs', 'Details', 'Alerts', 'Stats', 'Plugins');
+$TabList	= array ( 'Home', 'Graphs', 'Details', 'Alerts', 'Stats', 'MFLOW');
 $GraphTabs	= array ( 'Flows', 'Packets', 'Traffic');
 
 // these session vars are packed into the bookmark
@@ -693,7 +693,7 @@ switch ($label) {
 		require("profileadmin.php");
 		Process_stat_tab($tab_changed, $profile_changed);
 		break;
-	case "Plugins":
+	case "MFLOW":
 		if ( $tab_changed || !array_key_exists('sub_tab', $_SESSION )) {
 			if(isset($_GET['sub_tab']))
 				$_SESSION['sub_tab'] = intval($_GET['sub_tab']);
@@ -765,7 +765,7 @@ print_r($_COOKIE);
 ReportLog(ob_get_contents());
 ob_clean();
 
-$TabList 	  = array ( 'Home', 'Graphs', 'Details', 'Alerts', 'Stats', 'Plugins');
+$TabList 	  = array ( 'Home', 'Graphs', 'Details', 'Alerts', 'Stats', 'MFLOW');
 // tab display
 switch ($label) {
 	case "Home":
@@ -796,7 +796,7 @@ switch ($label) {
 	case "Stats":
 		DisplayAdminPage();
 		break;
-	case "Plugins":
+	case "MFLOW":
 		//	Run the plugin
 		if ( count($plugins) > 0 )
 			call_user_func($plugin_run, $_SESSION['sub_tab'], $_SESSION['profile'] );

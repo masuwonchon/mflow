@@ -30,8 +30,12 @@
 
 // Get List of Custom
     array_push($result['cnc'], "112.90.83.112");
+    array_push($result['cnc'], "46.243.126.120");
     array_push($result['malware'], "104.111.199.146");
+    array_push($result['malware'], "131.111.150.25");
+    array_push($result['malware'], "143.89.14.1");
     array_push($result['ddos'], "203.188.200.67");
+    array_push($result['ddos'], "200.144.248.54");
 
     $result['cnc_cnt'] = count($result['cnc']);
     $result['malware_cnt'] = count($result['malware']);
